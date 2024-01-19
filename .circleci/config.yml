@@ -2,8 +2,7 @@ version: 2.1
 
 executors:
   default-executor:
-    docker:
-      - image: cimg/base:stable
+    machine: true
 
 jobs:
   generate-and-compress:
@@ -39,11 +38,24 @@ jobs:
           name: Process compressed file
           command: echo "Processing 5GBfile.txt.gz"
 
+  next-job-nopigz:
+    executor: default-executor
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: ls -la
+      - run:
+          name: Process compressed file
+          command: echo "Processing 5GBfile.txt.gz"
+
 workflows:
   version: 2
   generate-process:
     jobs:
       - generate-and-compress
       - next-job:
+          requires:
+            - generate-and-compress
+      - next-job-nopigz:
           requires:
             - generate-and-compress
