@@ -27,6 +27,14 @@ jobs:
   next-job:
     executor: default-executor
     steps:
+      - run:
+          name: Install pigz
+          command: sudo apt-get update && sudo apt-get install -y pigz
+      - run:
+          name: Switch pgiz
+          command: |
+              ln -s /usr/bin/pigz /usr/local/bin/gzip
+              ln -s /usr/bin/unpigz /usr/local/bin/gunzip
       - attach_workspace:
           at: ./
       - run: ls -la
