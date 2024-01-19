@@ -13,8 +13,8 @@ jobs:
           name: Install pigz
           command: sudo apt-get update && sudo apt-get install -y pigz
       - run:
-          name: Generate 5GB file
-          command: dd if=/dev/urandom of=./5GBfile.txt bs=1048576 count=5120
+          name: Generate 10GB file
+          command: dd if=/dev/urandom of=./10GBfile.txt bs=1048576 count=10240
       - run: ls -la
       - persist_to_workspace:
           root: ./
