@@ -15,9 +15,6 @@ jobs:
       - run:
           name: Generate 5GB file
           command: dd if=/dev/urandom of=./5GBfile.txt bs=1048576 count=5120
-      - run:
-          name: Compress 5GB file
-          command: pigz 5GBfile.txt
       - run: ls -la
       - persist_to_workspace:
           root: ./
@@ -33,8 +30,8 @@ jobs:
       - run:
           name: Switch pgiz
           command: |
-              ln -s /usr/bin/pigz /usr/local/bin/gzip
-              ln -s /usr/bin/unpigz /usr/local/bin/gunzip
+              sudo ln -s /usr/bin/pigz /usr/local/bin/gzip
+              sudo ln -s /usr/bin/unpigz /usr/local/bin/gunzip
       - attach_workspace:
           at: ./
       - run: ls -la
