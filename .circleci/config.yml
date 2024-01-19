@@ -14,20 +14,22 @@ jobs:
           command: sudo apt-get update && sudo apt-get install -y pigz
       - run:
           name: Generate 30GB file
-          command: dd if=/dev/zero of=./30GBfile.txt bs=1024 count=31457280
+          command: dd if=/dev/urandom of=./30GBfile.txt bs=1024 count=31457280
       - run:
           name: Compress 30GB file
           command: pigz 30GBfile.txt
+      - run: ls -la
       - persist_to_workspace:
           root: ./
           paths:
-            - 30GBfile.txt.gz
+            - .
 
   next-job:
     executor: default-executor
     steps:
       - attach_workspace:
           at: ./
+      - run: ls -la
       - run:
           name: Process compressed file
           command: echo "Processing 30GBfile.txt.gz"
