@@ -27,11 +27,6 @@ jobs:
       - run:
           name: Install pigz
           command: sudo apt-get update && sudo apt-get install -y pigz
-      - run:
-          name: Switch pgiz
-          command: |
-              sudo ln -s /usr/bin/pigz /usr/local/bin/gzip
-              sudo ln -s /usr/bin/unpigz /usr/local/bin/gunzip
       - attach_workspace:
           at: ./
       - run: ls -la
